@@ -1,1 +1,1 @@
-# PIRSensorForSwitchBot
+# LightSensorForSwitchBot
