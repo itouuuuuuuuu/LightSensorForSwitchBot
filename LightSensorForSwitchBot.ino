@@ -85,7 +85,9 @@ void loop() {
     
     http.end();
     delay(5000);
-  }  
+  } else if (luminance >= 3000) {
+    pressed_sb = false;
+  }
 
   // show luminamce
   M5.Lcd.setCursor(0, 65);
