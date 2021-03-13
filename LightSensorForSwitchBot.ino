@@ -10,6 +10,7 @@
 WiFiMulti WiFiMulti;
 HTTPClient http;
 
+int PIN = 33;
 bool pressed_sb = false;
 
 void setup() {
@@ -24,17 +25,27 @@ void setup() {
     delay(500);
   }
 
+  // PIN setting
+  pinMode(PIN, ANALOG);
+
   // clear LCD
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 0, 2);
 
+  // show IP address
   M5.Lcd.print("IP addr: ");
   M5.Lcd.println(WiFi.localIP());
   M5.Lcd.println("---");
+
+  // show initial api message
+  M5.Lcd.println("status: -"); 
+  M5.Lcd.println("message: -"); 
 }
 
 void loop() {
-  if (!pressed_sb && WiFi.status() == WL_CONNECTED) {
+  int luminance = analogRead(PIN);
+
+  if (!pressed_sb && luminance < 3000 && WiFi.status() == WL_CONNECTED) {
 
     // create request
     const int capacity = JSON_OBJECT_SIZE(3);
@@ -60,6 +71,7 @@ void loop() {
         String status = obj[String("statusCode")];
         String message = obj[String("message")];
 
+        M5.Lcd.setCursor(0, 32);
         M5.Lcd.print("status: "); 
         M5.Lcd.println(status);
         M5.Lcd.print("message: "); 
@@ -73,5 +85,10 @@ void loop() {
     
     http.end();
     delay(5000);
-  }
+  }  
+
+  // show luminamce
+  M5.Lcd.setCursor(0, 65);
+  M5.Lcd.print("luminance: "); 
+  M5.Lcd.println(luminance);
 }
