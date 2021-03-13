@@ -11,6 +11,7 @@ WiFiMulti WiFiMulti;
 HTTPClient http;
 
 int PIN = 33;
+int PRESS_SB_THRESHOLD = 3000;
 bool pressed_sb = false;
 
 void setup() {
@@ -45,7 +46,7 @@ void setup() {
 void loop() {
   int luminance = analogRead(PIN);
 
-  if (!pressed_sb && luminance < 3000 && WiFi.status() == WL_CONNECTED) {
+  if (!pressed_sb && luminance < PRESS_SB_THRESHOLD && WiFi.status() == WL_CONNECTED) {
 
     // create request
     const int capacity = JSON_OBJECT_SIZE(3);
@@ -85,7 +86,7 @@ void loop() {
     
     http.end();
     delay(5000);
-  } else if (luminance >= 3000) {
+  } else if (luminance >= PRESS_SB_THRESHOLD) {
     pressed_sb = false;
   }
 
