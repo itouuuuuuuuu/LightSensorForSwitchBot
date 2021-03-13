@@ -11,7 +11,7 @@ WiFiMulti WiFiMulti;
 HTTPClient http;
 
 int PIN = 33;
-int PRESS_SB_THRESHOLD = 3000;
+int PRESS_SB_THRESHOLD = 3500;
 bool pressed_sb = false;
 
 void setup() {
